@@ -1,0 +1,11 @@
+C:/Users/15197/Desktop/demo/build/../install/bin/demo.exe
+C:/Users/15197/Desktop/demo/build/../install/lib/libmultiply.a
+C:/Users/15197/Desktop/demo/build/../install/bin/libdivision.dll
+C:/Users/15197/Desktop/demo/build/../install/include/config.h
+C:/Users/15197/Desktop/demo/build/../install/include/multiply.h
+C:/Users/15197/Desktop/demo/build/../install/include/division.h
+C:/Users/15197/Desktop/demo/build/../install/lib/libaddition.a
+C:/Users/15197/Desktop/demo/build/../install/include/addition.h
+C:/Users/15197/Desktop/demo/build/../install/bin/libsubtract.dll.a
+C:/Users/15197/Desktop/demo/build/../install/bin/libsubtract.dll
+C:/Users/15197/Desktop/demo/build/../install/include/subtract.h

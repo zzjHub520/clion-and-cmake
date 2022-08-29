@@ -1,0 +1,2 @@
+C:\PROGRA~1\mingw64\bin\ar.exe qc ..\lib\libaddition.a CMakeFiles/addition.dir/addition.cpp.obj
+C:\PROGRA~1\mingw64\bin\ranlib.exe ..\lib\libaddition.a

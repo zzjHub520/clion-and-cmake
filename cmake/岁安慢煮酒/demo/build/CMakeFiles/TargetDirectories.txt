@@ -1,0 +1,15 @@
+C:/Users/15197/Desktop/demo/build/CMakeFiles/demo.dir
+C:/Users/15197/Desktop/demo/build/CMakeFiles/edit_cache.dir
+C:/Users/15197/Desktop/demo/build/CMakeFiles/rebuild_cache.dir
+C:/Users/15197/Desktop/demo/build/CMakeFiles/list_install_components.dir
+C:/Users/15197/Desktop/demo/build/CMakeFiles/install.dir
+C:/Users/15197/Desktop/demo/build/CMakeFiles/install/local.dir
+C:/Users/15197/Desktop/demo/build/CMakeFiles/install/strip.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/addition.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/subtract.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/edit_cache.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/rebuild_cache.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/list_install_components.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/install.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/install/local.dir
+C:/Users/15197/Desktop/demo/build/calc/CMakeFiles/install/strip.dir
