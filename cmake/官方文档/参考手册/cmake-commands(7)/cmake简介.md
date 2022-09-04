@@ -1,12 +1,12 @@
 # [cmake-commands(7)](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#id2)
 
-Contents
+#### 内容
 
-- [cmake-commands(7)](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#cmake-commands-7)
-  - [Scripting Commands](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#scripting-commands)
-  - [Project Commands](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#project-commands)
-  - [CTest Commands](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#ctest-commands)
-  - [Deprecated Commands](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#deprecated-commands)
+- [cmake-命令](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#cmake-commands-7)
+  - [脚本命令](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#scripting-commands)
+  - [项目命令](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#project-commands)
+  - [CTest 命令](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#ctest-commands)
+  - [不推荐使用的命令](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#deprecated-commands)
 
 ## [脚本命令](https://cmake.org/cmake/help/latest/manual/cmake-commands.7.html#id3)
 
