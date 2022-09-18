@@ -245,13 +245,13 @@ ctest_run_script([NEW_PROCESS] script_file_name script_file_name1
 
 ```cmake
 ctest_sleep(<seconds>)
-```cmake
+```
 
 休眠给定的秒数。
 
 ```cmake
 ctest_sleep(<time1> <duration> <time2>)
-```cmake
+```
 
 如果 t > 0，则休眠 t=(time1 + duration - time2) 秒。
 
@@ -562,7 +562,7 @@ std::cout <<
   "  \033[31;1m line 2. Bold red, and indented!\033[0;0ml\n" <<
   "line 3. Not bold or indented...\n" <<
   "</CTestMeasurement>" << std::endl;
-```cmake
+```
 
 ### 图像测量
 
@@ -619,7 +619,7 @@ std::cout <<
 ```cmake
 std::cout <<
   "<CTestDetails>My Custom Details Value</CTestDetails>" << std::endl;
-```cmake
+```
 
 
 
