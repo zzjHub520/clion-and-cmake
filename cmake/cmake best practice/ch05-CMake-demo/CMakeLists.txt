@@ -9,5 +9,7 @@ project(study_cmake
 list(APPEND CMAKE_MESSAGE_CONTEXT Top)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 message("======================== temp test start ====================================")
+
 add_executable(main src/main.cpp)
+
 message("======================== temp test end ======================================")
