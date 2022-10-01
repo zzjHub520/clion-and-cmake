@@ -59,11 +59,48 @@ dpkg -e spdlog-1.10.0.deb .
 
 
 ## ch09 一个最小的 CMakeLists.txt
+
+
+
 ## ch10 理解 CMake 的构建过程
+
+
+
 ## ch11 什么是源码目录和构建目录以及源内构建和源外构建
+
+
+
 ## ch12 CMake 命令之 project()
 
+```cmake
+# project的变量
+PROJECT_NAME # 项目名
+CMAKE_PROJECT_NAME # 顶级项目名
 
+# 项目源码的目录
+PROJECT_SOURCE_DIR 
+ch12_demo_SOURCE_DIR 
+
+# 项目构建的目录
+PROJECT_BINARY_DIR 
+ch12_demo_BINARY_DIR 
+
+# 是否顶级项目
+PROJECT_IS_TOP_LEVEL
+ch12_demo_IS_TOP_LEVEL
+
+# 版本号
+message("version : ${CMAKE_PROJECT_VERSION}")
+message("version : ${CMAKE_PROJECT_VERSION_TWEAK}")
+message("version : ${PROJECT_VERSION}")
+message("version : ${PROJECT_VERSION_MAJOR}")
+message("version : ${PROJECT_VERSION_MINOR}")
+message("version : ${PROJECT_VERSION_PATCH}")
+message("version : ${PROJECT_VERSION_TWEAK}")
+
+PROJECT_DESCRIPTION, <PROJECT-NAME>_DESCRIPTION
+PROJECT_HOMEPAGE_URL, <PROJECT-NAME>_HOMEPAGE_URL
+```
 
 
 
