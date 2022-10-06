@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.23)
+project(cmake-code-example)
+#add_subdirectory(ch05-CMake-demo)
+#add_subdirectory(ch09-demo)
+#add_subdirectory(ch12-demo)
+add_subdirectory(ch13-demo)

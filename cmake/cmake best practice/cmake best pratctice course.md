@@ -98,13 +98,56 @@ message("version : ${PROJECT_VERSION_MINOR}")
 message("version : ${PROJECT_VERSION_PATCH}")
 message("version : ${PROJECT_VERSION_TWEAK}")
 
+# 项目说明
 PROJECT_DESCRIPTION, <PROJECT-NAME>_DESCRIPTION
+# 项目主页
 PROJECT_HOMEPAGE_URL, <PROJECT-NAME>_HOMEPAGE_URL
 ```
 
 
 
 ## ch13 CMake 变量之普通变量
+
+```cmake
+# 可以多个值，分隔符默认空格和分号
+set(myVar a b c d)
+list(LENGTH myVar outVar)
+message("myVar=${myVar}  myVar length=${outVar}")
+```
+
+```cmake
+#### 常见的变量定义 ###############
+message("####################")
+set(foo ab)                 # ab
+message("foo=${foo}")
+set(bar ${foo}cd)           # abcd
+message("bar=${bar}")
+set(baz ${foo} cd)          # ab;cd
+message("baz=${baz}")
+set(myVar ba)               # ba
+message("myVar=${myVar}")
+set(big "${${myVar}r}ef")   # abcdef
+message("big=${big}")
+set(${foo} xyz)             # set(ab xyz), ab=xyz
+message("${foo}=${${foo}}")
+set(bar ${not_define})
+message("bar=${bar}")
+```
+
+**多行打印**
+
+```cmake
+set(myVar "goes here")
+set(multline "First line ${myVar}
+Second line with a \"quoted\" word")
+message("${multline}")
+
+```
+
+
+
+
+
 ## ch14 CMake 命令之 lists()
 ## ch15 CMake变量之缓存变量
 ## ch16 CMake中属性的概念
