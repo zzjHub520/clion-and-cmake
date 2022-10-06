@@ -1,4 +1,2 @@
 cmake_minimum_required(VERSION 3.23)
 project(study_cmake)
-
-message("======================== temp test end ======================================")

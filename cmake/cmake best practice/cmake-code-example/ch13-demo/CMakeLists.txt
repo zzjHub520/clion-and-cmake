@@ -26,10 +26,21 @@ message("---------------- temp test start ----------------------")
 #message("${foo}=${${foo}}")
 #set(bar ${not_define})
 #message("bar=${bar}")
+#######################################
+#set(myVar "goes here")
+#set(multline "First line ${myVar}
+#Second line with a \"quoted\" word")
+#message("${multline}")
+
 
 set(myVar "goes here")
-set(multline "First line ${myVar}
-Second line with a \"quoted\" word")
+set(multline [==[First line ${myVar}
+Second line with a "quoted" word"]==])
+unset(multline)
 message("${multline}")
 
 message("---------------- temp test end ------------------------")
+
+
+
+
