@@ -571,6 +571,23 @@ message("macro_var=${macro_var}")
 
 
 ## ch22 CMake 变量的作用域
+
+### 引入作用域的几种方式
+#### 目录
+
+
+
+
+
+#### 函数
+### 其他影响变量作用域的场景
+#### 缓存变量
+#### PARENT_SCOPE
+
+
+
+
+
 ## ch23 初识 CMake 中 target 的概念
 ## ch24 初识 CMake 策略
 ## ch25 初识 CMake 构建类型

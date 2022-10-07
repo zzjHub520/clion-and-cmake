@@ -11,8 +11,8 @@ list(APPEND CMAKE_MESSAGE_CONTEXT Top)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(ch22-scope-of-variable src/main.cpp)
 
-set(top "this is top dir")
-message("top=${top}")
+set(TOP "this is top dir")
+message("TOP=${TOP}")
 
 message("------------------ temp test start ----------------------------")
 
@@ -25,6 +25,6 @@ message("------------------ temp test start ----------------------------")
 ### PARENT_SCOPE
 
 message("------------------ temp test end ------------------------------")
-
+add_subdirectory(src)
 
 
