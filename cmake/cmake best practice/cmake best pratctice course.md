@@ -309,7 +309,10 @@ list(SORT <list> [COMPARE <compare>] [CASE <case>] [ORDER <order>])
 ## ch15 CMake变量之缓存变量
 
 ```cmake
+# 第一种定义方式
 set(<variable> <value>... CACHE <type> <docstring> [FORCE])
+# 第二种定义方式
+option(is_top OFF "is top dir")
 ```
 
 支持的类型：
@@ -590,24 +593,162 @@ message("macro_var=${macro_var}")
 
 ![image-20221007172116149](ImagesMarkDown/cmake best pratctice course/image-20221007172116149.png)
 
+![image-20221007180428277](ImagesMarkDown/cmake best pratctice course/image-20221007180428277.png)
+
 ### 引入作用域的几种方式
 #### 目录
 
+**例子**
 
+```cmake
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
 
+project(ch22-scope-of-variable
+        VERSION 0.0.1.199
+        DESCRIPTION "cmake study project"
+        HOMEPAGE_URL "eglinux.com"
+        LANGUAGES CXX
+        )
 
+list(APPEND CMAKE_MESSAGE_CONTEXT Top)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_executable(ch22-scope-of-variable src/main.cpp)
+
+set(TOP "this is top dir")
+message("TOP=${TOP}")
+
+add_subdirectory(src)
+```
+
+```cmake
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+list(APPEND CMAKE_MESSAGE_CONTEXT src)
+message("TOP=${TOP}")
+```
 
 #### 函数
+
+```cmake
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+
+project(ch22-scope-of-variable
+        VERSION 0.0.1.199
+        DESCRIPTION "cmake study project"
+        HOMEPAGE_URL "eglinux.com"
+        LANGUAGES CXX
+        )
+
+list(APPEND CMAKE_MESSAGE_CONTEXT Top)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+add_executable(ch22-scope-of-variable src/main.cpp)
+
+set(TOP "this is top dir")
+message("TOP=${TOP}")
+
+function(test_var)
+    set(func_var "this is func var")
+    message("test_var func TOP=${TOP}")
+    message("test_var func func_var=${func_var}")
+endfunction()
+test_var()
+message("top func func_var=${func_var}")
+```
+
+
+
 ### 其他影响变量作用域的场景
 #### 缓存变量
+
+```cmake
+# 父级CMakeLists.txt
+message("is_top=${is_top}")
+add_subdirectory(src)
+
+# 子级CMakeLists.txt
+option(is_top OFF "is top dir")
+message("is_top=${is_top}")
+```
+
+运行两次，第一次父目录打印为空，第二次为OFF
+
 #### PARENT_SCOPE
 
+```cmake
+# 父级CMakeLists.txt
+add_subdirectory(src)
+message("src_var=${src_var}") # this is sub variable
 
+# 子级CMakeLists.txt
+set(src_var "this is sub variable" PARENT_SCOPE)
+message("src_var=${src_var}") # 为空
+```
 
 
 
 ## ch23 初识 CMake 中 target 的概念
+
+![image-20221007231511189](ImagesMarkDown/cmake best pratctice course/image-20221007231511189.png)
+
+![image-20221007231615346](ImagesMarkDown/cmake best pratctice course/image-20221007231615346.png)
+
+![image-20221007231743234](ImagesMarkDown/cmake best pratctice course/image-20221007231743234.png)
+
+![image-20221007232024140](ImagesMarkDown/cmake best pratctice course/image-20221007232024140.png)
+
+![image-20221007232132557](ImagesMarkDown/cmake best pratctice course/image-20221007232132557.png)
+
+![image-20221007232243404](ImagesMarkDown/cmake best pratctice course/image-20221007232243404.png)
+
+![image-20221007232336225](ImagesMarkDown/cmake best pratctice course/image-20221007232336225.png)
+
+![image-20221007232438704](ImagesMarkDown/cmake best pratctice course/image-20221007232438704.png)
+
 ## ch24 初识 CMake 策略
+
+```cmake
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
+project(ch24-policy)
+
+message("------------------ temp test start ----------------------------")
+cmake_policy(SET CMP0121 OLD)
+list(APPEND MYLIST "abc;def;ghi")
+list(GET MYLIST "any" OUT_VAR)
+message("OUT_VAR=${OUT_VAR}")
+
+message("------------------ temp test end ------------------------------")
+```
+
+```cmake
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
+project(ch24-policy)
+
+message("------------------ temp test start ----------------------------")
+list(APPEND MYLIST "abc;def;ghi")
+list(GET MYLIST 1 OUT_VAR)
+message("OUT_VAR=${OUT_VAR}")
+
+message("------------------ temp test end ------------------------------")
+```
+
+```CMAKE
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
+project(ch24-policy)
+
+message("------------------ temp test start ----------------------------")
+cmake_policy(PUSH)
+cmake_policy(SET CMP0121 OLD)
+list(APPEND MYLIST "abc;def;ghi")
+list(GET MYLIST "any" OUT_VAR)
+message("OUT_VAR=${OUT_VAR}")
+cmake_policy(POP)
+list(APPEND MYLIST "abc;def;ghi")
+list(GET MYLIST 1 OUT_VAR)
+message("OUT_VAR=${OUT_VAR}")
+message("------------------ temp test end ------------------------------")
+```
+
+
+
 ## ch25 初识 CMake 构建类型
 ## ch26 初识 CMake 预设
 ## ch27 CMake 配置阶段命令行基本用法

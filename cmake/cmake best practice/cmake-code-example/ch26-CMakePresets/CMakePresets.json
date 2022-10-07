@@ -1,0 +1,33 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/default",
+      "vendor": {
+        "eglinux.com/eglinux/1.0": {
+          "autoFormat": true
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configuration": "default"
+    }
+  ],
+  "vendor": {
+    "eglinux.com/eglinux/1.0": {
+      "autoFormat": true
+    }
+  }
+}

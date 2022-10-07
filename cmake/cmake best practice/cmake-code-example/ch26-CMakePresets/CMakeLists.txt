@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.21 FATAL_ERROR)
+project(ch26)
+list(APPEND CMAKE_MESSAGE_CONTEXT Top)
+message("------------------ temp test start ----------------------------")
+message("------------------ temp test end ------------------------------")
+add_executable(ch26 main.cpp)

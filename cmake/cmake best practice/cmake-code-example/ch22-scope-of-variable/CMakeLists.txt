@@ -14,6 +14,16 @@ add_executable(ch22-scope-of-variable src/main.cpp)
 set(TOP "this is top dir")
 message("TOP=${TOP}")
 
+function(test_var)
+    set(func_var "this is func var")
+    message("test_var func TOP=${TOP}")
+    message("test_var func func_var=${func_var}")
+endfunction()
+test_var()
+message("top func func_var=${func_var}")
+
+message("is_top=${is_top}")
+
 message("------------------ temp test start ----------------------------")
 
 # 变量的作用域
@@ -26,5 +36,5 @@ message("------------------ temp test start ----------------------------")
 
 message("------------------ temp test end ------------------------------")
 add_subdirectory(src)
-
+message("src_var=${src_var}")
 
