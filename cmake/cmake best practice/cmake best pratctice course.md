@@ -750,7 +750,56 @@ message("------------------ temp test end ------------------------------")
 
 
 ## ch25 初识 CMake 构建类型
+
+```CMAKE
+# The default build type must be set before project()
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR AND NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+```
+
 ## ch26 初识 CMake 预设
+
+```json
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/default",
+      "vendor": {
+        "eglinux.com/eglinux/1.0": {
+          "autoFormat": true
+        }
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configuration": "default"
+    }
+  ],
+  "vendor": {
+    "eglinux.com/eglinux/1.0": {
+      "autoFormat": true
+    }
+  }
+}
+```
+
+
+
 ## ch27 CMake 配置阶段命令行基本用法
 ## ch28 CMake 构建阶段命令行基本用法
 ## ch29 CMake 安装阶段命令行基本用法
