@@ -572,6 +572,24 @@ message("macro_var=${macro_var}")
 
 ## ch22 CMake 变量的作用域
 
+同一个项目，不同目录，启用message()命令输出附加到每个消息的上下文：
+
+**设置：**
+
+编译cmake加上：`--log-context`
+
+在CMakeLists.txt上加上：`list(APPEND CMAKE_MESSAGE_CONTEXT Top)`
+
+**效果**
+
+**Linux**
+
+![image-20221007172813635](ImagesMarkDown/cmake best pratctice course/image-20221007172813635.png)
+
+**windows**
+
+![image-20221007172116149](ImagesMarkDown/cmake best pratctice course/image-20221007172116149.png)
+
 ### 引入作用域的几种方式
 #### 目录
 
