@@ -801,9 +801,74 @@ message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 
 
 ## ch27 CMake 配置阶段命令行基本用法
+
+```
+git@github.com:PacktPublishing/CMake-Best-Practices.git
+```
+
+
+
+```sh
+cmake -S <source dir> -B <build dir> -G <Genrator> -D<VAR:TYPE=value>
+# 例子，—D有顺序要求
+cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_CXX_FLAGS:STRING="-Wall -Werror" -DCMAKE_BUILD_TYPE=Debug -S . -B build -G "Unix Makefiles" -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1
+# 指定编译类型
+cmake -DCMAKE_CXX_COMPILER=/usr/bin/g++ -DCMAKE_CXX_FLAGS:STRING="-Wall" -DCMAKE_CXX_FLAGS_RELEASE:STRING="-Werror" -DCMAKE_BUILD_TYPE=Debug -S . -B build -G "Unix Makefiles" -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl@1.1
+```
+
+```shell
+# 查看缓存变量
+cmake -L ./build # 一般的缓存变量
+cmake -LAH ./build # 高级的缓存变量，更详细的缓存变量
+```
+
+
+
 ## ch28 CMake 构建阶段命令行基本用法
+
+```sh
+# 单线程编译
+cmake --build ./build
+# 多线程编译
+cmake --build ./build --clean-first --parallel 16
+# 指定target编译
+cmake --build ./build --clean-first --target ch7_test_discovery_example
+# 输出更详细的信息
+cmake --build ./build --clean-first --target ch7_test_discovery_example --verbose
+# 实际编译器的参数
+cmake --build ./build --clean-first --target ch7_test_discovery_example -- --warn-undefined-variables # 相当于 make --warn-undefined-variables
+```
+
+
+
 ## ch29 CMake 安装阶段命令行基本用法
+
+```shell
+# 配置cmake
+cmake -S . -B ./build 
+# 编译
+cmake --build ./build --clean-first --parallel 4
+# 安装
+cmake --install ./build --prefix ./out
+```
+
+![image-20221009001601683](ImagesMarkDown/cmake best pratctice course/image-20221009001601683.png)
+
+![image-20221009001815375](ImagesMarkDown/cmake best pratctice course/image-20221009001815375.png)
+
+
+
 ## ch30 如何剥离符号信息
+
+只支持动态库和可执行程序，不支持静态库
+
+```shell
+# 剥离符号信息
+cmake --install ./build --prefix ./out --strip
+```
+
+
+
 ## ch31 ccmake 使用详解
 ## ch32 cmake-gui使用详解
 ## ch33 如何在 Visual Studio 中创建和使用 CMake 项目
