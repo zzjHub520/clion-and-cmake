@@ -873,8 +873,49 @@ cmake --install ./build --prefix ./out --strip
 ## ch32 cmake-gui使用详解
 ## ch33 如何在 Visual Studio 中创建和使用 CMake 项目
 ## ch34 如何在 vscode 中创建和使用 CMake 项目
+
+```cmake
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+project(ch34-vscode-project
+        VERSION 0.0.1
+        DESCRIPTION "This is my first cmake repo"
+        HOMEPAGE_URL "EGLINUX.COM"
+        LANGUAGES CXX
+        )
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+list(APPEND CMAKE_MESSAGE_CONTEXT Top)
+add_executable(ch34-vscode-project)
+target_sources(ch34-vscode-project PRIVATE main.cpp)
+```
+
+
+
 ## ch35 如何在 Qt Creator 中创建和使用CMake 项目
 ## ch36 使用CMake 管理一个可执行目标项目
+
+```http
+git@github.com:eglinuxer/mcmake.git
+```
+
+
+
+```cmake
+```
+
+
+
+
+
+
+
+
+
+
+
 ## ch37 使用 CMake 管理一个库目标
 ## ch38 CMake 如何控制共享库的符号可见性
 ## ch39 使用CMake 管理仅头文件的库
