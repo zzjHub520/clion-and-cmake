@@ -903,20 +903,30 @@ git@github.com:eglinuxer/mcmake.git
 
 
 
+## ch37 使用 CMake 管理一个库目标
+
 ```cmake
+# 默认是静态库
+add_library(<name> [STATIC | SHARED | MODULE]
+            [EXCLUDE_FROM_ALL]
+            [<source>...])
+```
+
+```sh
+# 也可以配置的时候，指定
+cmake -DBUILD_SHARED_LIBS=ON -S . -B ./build --log-context
+```
+
+```cmake
+# 给动态库加版本号
+set_target_properties(hello
+        PROPERTIES VERSION ${PROJECT_VERSION}
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+        )
 ```
 
 
 
-
-
-
-
-
-
-
-
-## ch37 使用 CMake 管理一个库目标
 ## ch38 CMake 如何控制共享库的符号可见性
 ## ch39 使用CMake 管理仅头文件的库
 ## ch40 如何在CMake 中使用我们自己的库
