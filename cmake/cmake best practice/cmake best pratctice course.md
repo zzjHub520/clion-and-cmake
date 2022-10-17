@@ -931,7 +931,105 @@ set_target_properties(hello
 ## ch39 使用CMake 管理仅头文件的库
 ## ch40 如何在CMake 中使用我们自己的库
 ## ch41 CMake 管理编译器和连接器的行为
+
+target_compile_definitions
+
+```cmake
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+
+project(ch41_manage_compiler_linker
+    VERSION 0.0.1
+    DESCRIPTION "A collection of sample C++ applications and libraries to demonstrate creating libraries and executables"
+    LANGUAGES CXX
+)
+
+add_executable(main)
+target_sources(main PRIVATE src/main.cpp)
+
+target_compile_definitions(main PRIVATE GIT_VERSION="${CMAKE_PROJECT_VERSION}")
+```
+
+```cpp
+//
+// Created by zzj on 2022/10/16.
+//
+#include <iostream>
+
+#ifndef GIT_VERSION
+#define GIT_VERSION unknown
+#endif
+
+using namespace std;
+
+const char git_rev[] = GIT_VERSION;
+
+int main(int argc, const char *argv[]) {
+    std::cout << "Hello C++ " << __cplusplus << std::endl;
+    cout << "git version: " << git_rev << endl;
+    return 0;
+}
+```
+
 ## ch42 CMake 命令之install()
+
+### 1安装可执行文件
+
+```cmake
+cmake_minimum_required(VERSION 3.23 FATAL_ERROR)
+
+project(ex01_executbale
+        VERSION 0.0.1
+        DESCRIPTION "A collection of sample C++ applications and libraries to demonstrate creating libraries and executables"
+        LANGUAGES CXX
+        )
+
+add_executable(main src/main.cpp)
+install(TARGETS main)
+```
+
+```sh
+cmake -S . -B ./build
+cmake --build ./build
+cmake --install ./build --prefix ./out
+```
+
+安装路径的改变
+
+| Target Type                 | GNUInstallDirs Variable       | Built-In Default |
+| :-------------------------- | :---------------------------- | :--------------- |
+| `RUNTIME`                   | `${CMAKE_INSTALL_BINDIR}`     | `bin`            |
+| `LIBRARY`                   | `${CMAKE_INSTALL_LIBDIR}`     | `lib`            |
+| `ARCHIVE`                   | `${CMAKE_INSTALL_LIBDIR}`     | `lib`            |
+| `PRIVATE_HEADER`            | `${CMAKE_INSTALL_INCLUDEDIR}` | `include`        |
+| `PUBLIC_HEADER`             | `${CMAKE_INSTALL_INCLUDEDIR}` | `include`        |
+| `FILE_SET` (type `HEADERS`) | `${CMAKE_INSTALL_INCLUDEDIR}` | `include`        |
+
+```cmake
+add_library(mylib STATIC ...)
+set_target_properties(mylib PROPERTIES PUBLIC_HEADER mylib.h)
+include(GNUInstallDirs)
+install(TARGETS mylib
+        PUBLIC_HEADER
+          DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/myproj
+)
+```
+
+
+
+### 2安装静态库
+
+### 3安装文件
+
+### 4安装目录
+
+### 5安装配置文件包
+
+### 6安装包
+
+
+
+
+
 ## ch43 如何给其他项目提供我们自己项目的信息
 ## ch44 CMake 打包详解
 ## ch45 CMake 查找文件和目录
