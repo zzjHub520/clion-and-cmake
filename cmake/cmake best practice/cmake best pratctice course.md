@@ -1022,16 +1022,22 @@ install(TARGETS mylib
 
 ### 4安装目录
 
-### 5安装配置文件包
-
-### 6安装包
-
-
-
 
 
 ## ch43 如何给其他项目提供我们自己项目的信息
+
+```cmake
+install(EXPORT <export-name> [...])
+```
+
+
+
 ## ch44 CMake 打包详解
+
+
+
+
+
 ## ch45 CMake 查找文件和目录
 ## ch46 CMake 查找可执行程序
 ## ch47 CMake 如何查找第三方库
