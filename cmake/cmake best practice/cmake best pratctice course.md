@@ -1039,12 +1039,81 @@ install(EXPORT <export-name> [...])
 
 
 ## ch45 CMake 查找文件和目录
-## ch46 CMake 查找可执行程序
+
+#### 查找文件
+
+短的签名，查找出来的目录被存到缓存变量里
+
+```cmake
+find_file (<VAR> name1 [path1 path2 ...])
+```
+
+```CMAKE
+# NO_DEFAULT_PATH 不用查找默认的目录
+find_file(FOO_HEADER foo.cpp
+        PATHS [[C:\Users\1\Documents\workspaces\clion-and-cmake\cmake\cmake best practice\cmake-code-example\ch45_find_file_path\src]]
+        NO_DEFAULT_PATH
+        )
+message(${FOO_HEADER})
+# REQUIRED 重复查找（验证不通过）
+find_file(FOO_HEADER main.cpp
+        REQUIRED
+        )
+message(${FOO_HEADER})
+```
+
+#### 查找目录
+
+短的签名
+
+```cmake
+find_path (<VAR> name1 [path1 path2 ...])
+```
+
+
+
+## ch46 CMake 查找可执行程序 -（补）库
+
+
+
 ## ch47 CMake 如何查找第三方库
+
+```sh
+# 没有-D指定的话，那会去环境变量里找
+cmake -DOPENSS_ROOT_DIR=/usr/local/opt/openssl@1.1 -S . -B ./build
+```
+
+
+
+
+
+
+
+
+
 ## ch48 如何在自己的项目使用第三方库
 ## ch49 如何自己写一个CMake 的查找模块
 ## ch50 vcpkg 使用介绍
 ## ch51 CMake 如何集成第三方源码
+
+![image-20221021211800979](ImagesMarkDown/cmake best pratctice course/image-20221021211800979.png)
+
+签名
+
+```cmake
+FetchContent_Declare(
+  <name>
+  <contentOptions>...
+  [SYSTEM]
+  [OVERRIDE_FIND_PACKAGE |
+   FIND_PACKAGE_ARGS args...]
+)
+```
+
+
+
+
+
 ## ch52 CMake 如何在编译阶段执行用户自定义任务
 ## ch53 如何向已有的目标添加用户自定义任务
 ## ch54 如何通过用户自定义任务生成文件
