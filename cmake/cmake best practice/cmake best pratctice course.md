@@ -1096,7 +1096,7 @@ cmake -DOPENSS_ROOT_DIR=/usr/local/opt/openssl@1.1 -S . -B ./build
 ## ch50 vcpkg 使用介绍
 ## ch51 CMake 如何集成第三方源码
 
-![image-20221021211800979](ImagesMarkDown/cmake best pratctice course/image-20221021211800979.png)
+![image-20221021212619865](ImagesMarkDown/cmake best pratctice course/image-20221021212619865.png)
 
 签名
 
@@ -1115,6 +1115,11 @@ FetchContent_Declare(
 
 
 ## ch52 CMake 如何在编译阶段执行用户自定义任务
+
+![image-20221021230120554](ImagesMarkDown/cmake best pratctice course/image-20221021230120554.png)
+
+
+
 ## ch53 如何向已有的目标添加用户自定义任务
 ## ch54 如何通过用户自定义任务生成文件
 ## ch55 如何在配置阶段执行用户自定义任务

@@ -9,3 +9,4 @@ project(ch51_thirdparty
 list(APPEND CMAKE_MESSAGE_CONTEXT Top)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_subdirectory(fetch_content_example)
+add_subdirectory(external_project_example)
