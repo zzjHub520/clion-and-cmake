@@ -1205,6 +1205,16 @@ execute_process(COMMAND <cmd1> [<arguments>]
 
 ## ch56 CMake 如何拷贝和更改文件
 
+```cmake
+configure_file(<input> <output>
+               [NO_SOURCE_PERMISSIONS | USE_SOURCE_PERMISSIONS |
+                FILE_PERMISSIONS <permissions>...]
+               [COPYONLY] [ESCAPE_QUOTES] [@ONLY]
+               [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])
+```
+
+
+
 
 
 ## ch57 CMake 支持的跨平台命令
