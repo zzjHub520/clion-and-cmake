@@ -1121,11 +1121,49 @@ FetchContent_Declare(
 
 
 ## ch53 如何向已有的目标添加用户自定义任务
+
+![image-20221022183309612](ImagesMarkDown/cmake best pratctice course/image-20221022183309612.png)
+
+
+
+
+
 ## ch54 如何通过用户自定义任务生成文件
 ## ch55 如何在配置阶段执行用户自定义任务
 ## ch56 CMake 如何拷贝和更改文件
 ## ch57 CMake 支持的跨平台命令
+
+```sh
+# 帮助文档
+cmake -E help
+# 应用 例子
+cmake -E echo "dddddddd"
+
+```
+
+
+
 ## ch58 什么是CMake 脚本
+
+**cmake命令**
+
+- 脚本命令
+- 项目命令
+- CTest命令
+- 过时的命令
+
+cmake脚本能够用cmake脚本命令
+
+签名
+
+```sh
+cmake [-D <var>=<value>]... -P <cmake-script-file> [-- <unparsed-options>...]
+```
+
+
+
+
+
 ## ch59 CMake 预设详解
 ## ch60 使用sysroots 隔离构建环境
 ## ch61 超级构建
