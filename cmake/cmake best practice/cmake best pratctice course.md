@@ -1129,8 +1129,84 @@ FetchContent_Declare(
 
 
 ## ch54 如何通过用户自定义任务生成文件
+
+```cmake
+add_custom_command(OUTPUT output1 [output2 ...]
+                   COMMAND command1 [ARGS] [args1...]
+                   [COMMAND command2 [ARGS] [args2...] ...]
+                   [MAIN_DEPENDENCY depend] #
+                   [DEPENDS [depends...]] #
+                   [BYPRODUCTS [files...]]
+                   [IMPLICIT_DEPENDS <lang1> depend1
+                                    [<lang2> depend2] ...]
+                   [WORKING_DIRECTORY dir] #
+                   [COMMENT comment]
+                   [DEPFILE depfile]
+                   [JOB_POOL job_pool]
+                   [VERBATIM] [APPEND] [USES_TERMINAL]
+                   [COMMAND_EXPAND_LISTS])
+```
+
+生成文件例子1
+
+```cmake
+add_custom_command(
+  OUTPUT out.c
+  COMMAND someTool -i ${CMAKE_CURRENT_SOURCE_DIR}/in.txt
+                   -o out.c
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/in.txt
+  VERBATIM)
+add_library(myLib out.c)
+```
+
+生成文件例子2
+
+```cmake
+add_custom_command(
+  OUTPUT "out-$<CONFIG>.c"
+  COMMAND someTool -i ${CMAKE_CURRENT_SOURCE_DIR}/in.txt
+                   -o "out-$<CONFIG>.c"
+                   -c "$<CONFIG>"
+  DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/in.txt
+  VERBATIM)
+add_library(myLib "out-$<CONFIG>.c")
+```
+
+
+
 ## ch55 如何在配置阶段执行用户自定义任务
+
+签名
+
+```cmake
+execute_process(COMMAND <cmd1> [<arguments>]
+                [COMMAND <cmd2> [<arguments>]]...
+                [WORKING_DIRECTORY <directory>]
+                [TIMEOUT <seconds>]
+                [RESULT_VARIABLE <variable>]
+                [RESULTS_VARIABLE <variable>]
+                [OUTPUT_VARIABLE <variable>]
+                [ERROR_VARIABLE <variable>]
+                [INPUT_FILE <file>]
+                [OUTPUT_FILE <file>]
+                [ERROR_FILE <file>]
+                [OUTPUT_QUIET]
+                [ERROR_QUIET]
+                [COMMAND_ECHO <where>]
+                [OUTPUT_STRIP_TRAILING_WHITESPACE]
+                [ERROR_STRIP_TRAILING_WHITESPACE]
+                [ENCODING <name>]
+                [ECHO_OUTPUT_VARIABLE]
+                [ECHO_ERROR_VARIABLE]
+                [COMMAND_ERROR_IS_FATAL <ANY|LAST>])
+```
+
+
+
 ## ch56 CMake 如何拷贝和更改文件
+
+
+
 ## ch57 CMake 支持的跨平台命令
 
 ```sh

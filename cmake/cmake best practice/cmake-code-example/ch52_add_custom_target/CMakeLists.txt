@@ -20,7 +20,7 @@ add_custom_target(CallEcho ALL
 
 add_custom_target(HASH ALL
         COMMAND md5 $<TARGET_FILE:ch52_add_custom_target>
-        VERBATIM
+        VERBATIM # 传给底层的shell
         )
 
 add_custom_target(HASH2 ALL
