@@ -1213,7 +1213,20 @@ configure_file(<input> <output>
                [NEWLINE_STYLE [UNIX|DOS|WIN32|LF|CRLF] ])
 ```
 
+```cpp
+#cmakedefine VAR ...    
+#define VAR ...
+/* #undef VAR */
 
+#cmakedefine01 VAR
+#define VAR 0
+#define VAR 1
+
+#cmakedefine VAR
+#cmakedefine01 VAR
+#define VAR 
+#define VAR 1
+```
 
 
 
@@ -1245,8 +1258,6 @@ cmake脚本能够用cmake脚本命令
 ```sh
 cmake [-D <var>=<value>]... -P <cmake-script-file> [-- <unparsed-options>...]
 ```
-
-
 
 
 
