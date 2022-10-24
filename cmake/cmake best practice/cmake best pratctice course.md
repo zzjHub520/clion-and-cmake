@@ -587,13 +587,13 @@ message("macro_var=${macro_var}")
 
 **Linux**
 
-![image-20221007172813635](ImagesMarkDown/cmake best pratctice course/image-20221007172813635.png)
+![image-20221007172813635](ImagesMarkDown/cmake-best-pratctice-course/image-20221007172813635.png)
 
 **windows**
 
-![image-20221007172116149](ImagesMarkDown/cmake best pratctice course/image-20221007172116149.png)
+![image-20221007172116149](ImagesMarkDown/cmake-best-pratctice-course/image-20221007172116149.png)
 
-![image-20221007180428277](ImagesMarkDown/cmake best pratctice course/image-20221007180428277.png)
+![image-20221007180428277](ImagesMarkDown/cmake-best-pratctice-course/image-20221007180428277.png)
 
 ### 引入作用域的几种方式
 #### 目录
@@ -687,21 +687,21 @@ message("src_var=${src_var}") # 为空
 
 ## ch23 初识 CMake 中 target 的概念
 
-![image-20221007231511189](ImagesMarkDown/cmake best pratctice course/image-20221007231511189.png)
+![image-20221007231511189](ImagesMarkDown/cmake-best-pratctice-course/image-20221007231511189.png)
 
-![image-20221007231615346](ImagesMarkDown/cmake best pratctice course/image-20221007231615346.png)
+![image-20221007231615346](ImagesMarkDown/cmake-best-pratctice-course/image-20221007231615346.png)
 
-![image-20221007231743234](ImagesMarkDown/cmake best pratctice course/image-20221007231743234.png)
+![image-20221007231743234](ImagesMarkDown/cmake-best-pratctice-course/image-20221007231743234.png)
 
-![image-20221007232024140](ImagesMarkDown/cmake best pratctice course/image-20221007232024140.png)
+![image-20221007232024140](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232024140.png)
 
-![image-20221007232132557](ImagesMarkDown/cmake best pratctice course/image-20221007232132557.png)
+![image-20221007232132557](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232132557.png)
 
-![image-20221007232243404](ImagesMarkDown/cmake best pratctice course/image-20221007232243404.png)
+![image-20221007232243404](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232243404.png)
 
-![image-20221007232336225](ImagesMarkDown/cmake best pratctice course/image-20221007232336225.png)
+![image-20221007232336225](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232336225.png)
 
-![image-20221007232438704](ImagesMarkDown/cmake best pratctice course/image-20221007232438704.png)
+![image-20221007232438704](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232438704.png)
 
 ## ch24 初识 CMake 策略
 
@@ -852,9 +852,9 @@ cmake --build ./build --clean-first --parallel 4
 cmake --install ./build --prefix ./out
 ```
 
-![image-20221009001601683](ImagesMarkDown/cmake best pratctice course/image-20221009001601683.png)
+![image-20221009001601683](ImagesMarkDown/cmake-best-pratctice-course/image-20221009001601683.png)
 
-![image-20221009001815375](ImagesMarkDown/cmake best pratctice course/image-20221009001815375.png)
+![image-20221009001815375](ImagesMarkDown/cmake-best-pratctice-course/image-20221009001815375.png)
 
 
 
@@ -1096,7 +1096,7 @@ cmake -DOPENSS_ROOT_DIR=/usr/local/opt/openssl@1.1 -S . -B ./build
 ## ch50 vcpkg 使用介绍
 ## ch51 CMake 如何集成第三方源码
 
-![image-20221021212619865](ImagesMarkDown/cmake best pratctice course/image-20221021212619865.png)
+![image-20221021212619865](ImagesMarkDown/cmake-best-pratctice-course/image-20221021212619865.png)
 
 签名
 
@@ -1116,13 +1116,13 @@ FetchContent_Declare(
 
 ## ch52 CMake 如何在编译阶段执行用户自定义任务
 
-![image-20221021230120554](ImagesMarkDown/cmake best pratctice course/image-20221021230120554.png)
+![image-20221021230120554](ImagesMarkDown/cmake-best-pratctice-course/image-20221021230120554.png)
 
 
 
 ## ch53 如何向已有的目标添加用户自定义任务
 
-![image-20221022183309612](ImagesMarkDown/cmake best pratctice course/image-20221022183309612.png)
+![image-20221022183309612](ImagesMarkDown/cmake-best-pratctice-course/image-20221022183309612.png)
 
 
 
