@@ -1,0 +1,6 @@
+#pragma once
+
+#cmakedefine VAR    "${VAR}"
+#cmakedefine VAR2   "@VAR2@"
+#cmakedefine VAR3   "@VAR3@"
+#cmakedefine VAR4   "@VAR4@"
