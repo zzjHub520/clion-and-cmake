@@ -1262,6 +1262,14 @@ cmake [-D <var>=<value>]... -P <cmake-script-file> [-- <unparsed-options>...]
 
 
 ## ch59 CMake 预设详解
+
+```sh
+cmake --list-presets
+cmake --preset=default
+```
+
+
+
 ## ch60 使用sysroots 隔离构建环境
 ## ch61 超级构建
 ## ch62 使用超级构建构建 Qt6
