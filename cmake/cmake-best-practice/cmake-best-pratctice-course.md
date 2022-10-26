@@ -34,6 +34,14 @@ int main(int argc, const char* argv[]) {
 
 
 ## ch02 Linux 安装 CMake
+
+```sh
+apt update
+apt install cmake -y
+```
+
+
+
 ## ch03 Windows 安装 CMake
 ## ch04 macOS 安装 CMake
 ## ch05 CMake 开发环境搭建
