@@ -43,10 +43,15 @@ apt install cmake -y
 
 
 ## ch03 Windows 安装 CMake
+
 ## ch04 macOS 安装 CMake
+
 ## ch05 CMake 开发环境搭建
+
 ## ch06 CMake 命令介绍
+
 ## ch07 CMake 交互界面介绍
+
 ## ch08 使用 CMake 构建第一个 CMake 项目
 
 **spdlog** 构建日志库项目
@@ -87,7 +92,9 @@ project(study_cmake)
 
 
 
-## ch12 CMake 命令之 project()
+## ch12 CMake 命令之 project()，和常用命令
+
+### project()
 
 ```cmake
 # project的变量
@@ -121,9 +128,243 @@ PROJECT_DESCRIPTION, <PROJECT-NAME>_DESCRIPTION
 PROJECT_HOMEPAGE_URL, <PROJECT-NAME>_HOMEPAGE_URL
 ```
 
+### 常用命令
+
+#### **AUX_SOURCE_DIRECTORY**
+
+```cmake
+aux_source_directory(<dir> <variable>)
+```
+
+- 查找当前目录所有源文件 并将源文件名称列表保存到 DIR_DRCS变量中
+- 不能查找子目录
+
+#### **file**
+
+**文件操作命令**
+
+```cmake
+#将message写入filename文件中，会覆盖文件原有内容
+file(WRITE filename "message")
+# 将message写入filename文件中，会追加在文件末尾
+file(APPEND filename "message")
+#从filename文件中读取内容并存储到var变量中，如果指定了numBytes和offset，
+#则从offset处开始最多度numBytst个字节，另外如果指定了HEX参数，则内容会以十六进制形式存储在var变量中
+file(READ filename var [LIMIT numBytes] [OFFSET offset] [HEX])
+#重名名文件
+file(RENAME <oldname> <newname>)
+#删除文件，等于rm命令
+file(REMOVE [file1 ...])
+#递归的执行删除文件命令，等于rm -r
+file(REMOVE_RECURSE [file1 ...])
+#根据指定的url下载文件
+#timeout超时时间；下载的状态会保存到status中；下载日志会被保存到log；sum指定所下载文件预期的MD5值，如果指定会自动进行比对
+#如果不一致，则返回一个错误；SHOW_PROGRESS,进度信息会以状态信息的形式被打印出来
+file(DOWNLOAD url file [TIMEOUT timeout] [STATUS status] [LOG log] [EXPECTED_MD5 sum] [SHOW_PROGRESS])
+#创建目录
+file(MAKE_DIRECTORY [dir1 dir2 ...])
+#会把path转换为以unix的开头的cmake风格路径，保存在result中
+file(TO_CMAKE_PATH path result)
+#它会把cmake风格的路径转换为本地路径风格：windows下用“\”,而unix下用“/”
+file(TO_NATIVE_PATH path result)
+#将会为所有匹配查询表达式的文件生成一个list，并将该list存储进变量variable里，如果一个表达式指定了RELATIVE，返回的结果
+#将会是相对于给定路径的相对路径，查询表达式例子：*.cxx,*.vt?
+#NOTE:按照官方文档的说法，不建议使用file的GLOB指令来收集工程的源文件
+file(GLOB variable [RELATIVE path] [globbing expressions]....)
+```
+
+#### message
+
+##### 签名
+
+```cmake
+message([<mode>] "message text" ...)
+```
+
+| mode               | 说明                                                         |
+| ------------------ | ------------------------------------------------------------ |
+| FATAL_ERROR        | 产生 CMake Error，**会停止编译系统的构建过程**               |
+| SEND_ERROR         | CMake错误，继续执行，但是会跳过生成的步骤                    |
+| DEPRECATION        | 如果CMAKE_ERROR_DEPRECATED或CMAKE_WARN_DEPRECATED变量分别被启用，则为CMake Deprecation Error或Warning，否则没有消息。 |
+| (none) or `NOTICE` | 重要信息打印到stderr以引起用户的注意。                       |
+| STATUS             | 项目用户可能感兴趣的主要消息。理想情况下，这些信应该简明扼要，不超过一行，但仍能提供信息。 |
+| VERBOSE            | 针对项目用户的详细信息消息。这些消息应该提供在大多数情况下不感兴趣的额外细节，但是对于那些构建项目的人来说，当他们想要更深入地了解正在发生的事情时，这些细节可能会很有用。 |
+| DEBUG              | 详细的信息性消息，用于开发人员处理项目本身，而不是只想构建项目的用户。这些消息通常不会引起构建项目的其他用户的兴趣，并且通常与内部实现细节密切相关。 |
+| TRACE              | 具有非常低级实现细节的细粒度消息。使用此日志级别的消息通常只是临时的，并且在发布项目、打包文件等之前预期会被删除。 |
+| WARNING            | CMake警告，会继续执行                                        |
+| AUTHOR_WARNING     | CMake警告（dev），会继续执行                                 |
+
+##### 检测报告
+
+3.17新版功能。
+
+CMake输出中的一个常见模式是指示某种检查开始的消息，然后是报告该检查结果的另一个消息。例如:
+
+```cmake
+message(STATUS "Looking for someheader.h")
+#... do the checks, set checkSuccess with the result
+if(checkSuccess)
+  message(STATUS "Looking for someheader.h - found")
+else()
+  message(STATUS "Looking for someheader.h - not found")
+endif()
+```
+
+可以用下面代替：
+
+```cmake
+message(<checkState> "message" ...)
+```
+
+其中< checkState >必须是以下之一:
+
+- CHECK_START：记录一个关于将要执行的检查的简明消息。
+- CHECK_PASS：记录一个成功的检查结果。
+- CHECK_FAIL：记录一个不成功的检查结果。
+
+在记录检查结果时，该命令会重复最近开始的尚未报告结果的检查的消息，然后是一些分隔符，然后是CHECK_PASS或CHECK_FAIL关键字之后提供的消息文本。检查消息总是报告在STATUS日志级别。
+
+检查可能是嵌套的，并且每个CHECK_START应该恰好有一个匹配的CHECK_PASS或CHECK_FAIL。如果需要的话，CMAKE_MESSAGE_INDENT变量还可以用于向嵌套检查添加缩进。例如:
+
+```cmake
+message(CHECK_START "Finding my things")
+list(APPEND CMAKE_MESSAGE_INDENT "  ")
+unset(missingComponents)
+
+message(CHECK_START "Finding partA")
+# ... do check, assume we find A
+message(CHECK_PASS "found")
+
+message(CHECK_START "Finding partB")
+# ... do check, assume we don't find B
+list(APPEND missingComponents B)
+message(CHECK_FAIL "not found")
+
+list(POP_BACK CMAKE_MESSAGE_INDENT)
+if(missingComponents)
+  message(CHECK_FAIL "missing components: ${missingComponents}")
+else()
+  message(CHECK_PASS "all components found")
+endif()
+```
+
+上面的输出如下所示:
+
+```
+-- Finding my things
+--   Finding partA
+--   Finding partA - found
+--   Finding partB
+--   Finding partB - not found
+-- Finding my things - missing components: B
+```
+
+##### 颜色凸显
+
+我们还可以自定义初始化cmake构建的`message`命令打印颜色，可以方便快速的凸显出错误信息，我们可以创建一个文件`cmake/messagecolor.cmake`：
+
+```cmake
+IF (NOT WIN32)
+    STRING(ASCII 27 Esc)
+    SET(ColourReset "${Esc}[m")
+    SET(ColourBold "${Esc}[1m")
+    SET(Red "${Esc}[31m")
+    SET(Green "${Esc}[32m")
+    SET(Yellow "${Esc}[33m")
+    SET(Blue "${Esc}[34m")
+    SET(MAGENTA "${Esc}[35m")
+    SET(Cyan "${Esc}[36m")
+    SET(White "${Esc}[37m")
+    SET(BoldRed "${Esc}[1;31m")
+    SET(BoldGreen "${Esc}[1;32m")
+    SET(BoldYellow "${Esc}[1;33m")
+    SET(BOLDBLUE "${Esc}[1;34m")
+    SET(BOLDMAGENTA "${Esc}[1;35m")
+    SET(BoldCyan "${Esc}[1;36m")
+    SET(BOLDWHITE "${Esc}[1;37m")
+ENDIF ()
+
+FUNCTION(message)
+    LIST(GET ARGV 0 MessageType)
+    IF (MessageType STREQUAL FATAL_ERROR OR MessageType STREQUAL SEND_ERROR)
+        LIST(REMOVE_AT ARGV 0)
+        _message(${MessageType} "${BoldRed}${ARGV}${ColourReset}")
+    ELSEIF (MessageType STREQUAL WARNING)
+        LIST(REMOVE_AT ARGV 0)
+        _message(${MessageType}
+                "${BoldYellow}${ARGV}${ColourReset}")
+    ELSEIF (MessageType STREQUAL AUTHOR_WARNING)
+        LIST(REMOVE_AT ARGV 0)
+        _message(${MessageType} "${BoldCyan}${ARGV}${ColourReset}")
+    ELSEIF (MessageType STREQUAL STATUS)
+        LIST(REMOVE_AT ARGV 0)
+        _message(${MessageType} "${Green}${ARGV}${ColourReset}")
+    ELSEIF (MessageType STREQUAL INFO)
+        LIST(REMOVE_AT ARGV 0)
+        _message("${Blue}${ARGV}${ColourReset}")
+    ELSE ()
+        _message("${ARGV}")
+    ENDIF ()
+ENDFUNCTION()
+```
+
+在主CMakeLists.txt中导入该cmake文件，则可以改变message命令各个级别打印的颜色显示。
+
+## ch13 CMake 变量之普通变量，预定义变量
+
+### **布尔常量**
+
+| 类型  | 值                                                           |
+| ----- | ------------------------------------------------------------ |
+| true  | 1，ON，YES，TRUE，Y，非0的值                                 |
+| false | 0，OFF，NO，FALSE,N,IGNORE,NOTFOUND, 空字符串，以-NOTFOUND结尾的字符串 |
+
+### 预定义变量
+
+```cmake
+PROJECT_SOURCE_DIR：工程的根目录
+PROJECT_BINARY_DIR：运行 cmake 命令的目录，通常是 ${PROJECT_SOURCE_DIR}/build
+PROJECT_NAME：返回通过 project 命令定义的项目名称
+CMAKE_CURRENT_SOURCE_DIR：当前处理的 CMakeLists.txt 所在的路径
+CMAKE_CURRENT_BINARY_DIR：target 编译目录
+CMAKE_CURRENT_LIST_DIR：CMakeLists.txt 的完整路径
+CMAKE_CURRENT_LIST_LINE：当前所在的行
+CMAKE_MODULE_PATH：定义自己的 cmake 模块所在的路径，SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)，然后可以用INCLUDE命令来调用自己的模块
+EXECUTABLE_OUTPUT_PATH：重新定义目标二进制可执行文件的存放位置
+LIBRARY_OUTPUT_PATH：重新定义目标链接库文件的存放位置
+```
+
+### 环境变量
+
+**使用环境变量**
+
+```cmake
+$ENV{Name}
+```
+
+**写入环境变量**
+
+```cmake
+set(ENV{Name} value) # 这里没有“$”符号
+```
+
+**系统信息**
+
+```cmake
+CMAKE_MAJOR_VERSION：# cmake 主版本号，比如 3.4.1 中的 3
+CMAKE_MINOR_VERSION：# cmake 次版本号，比如 3.4.1 中的 4
+CMAKE_PATCH_VERSION：# cmake 补丁等级，比如 3.4.1 中的 1
+CMAKE_SYSTEM：# 系统名称，比如 Linux-­2.6.22
+CMAKE_SYSTEM_NAME：# 不包含版本的系统名，比如 Linux
+CMAKE_SYSTEM_VERSION：# 系统版本，比如 2.6.22
+CMAKE_SYSTEM_PROCESSOR：# 处理器名称，比如 i686
+UNIX：# 在所有的类 UNIX 平台下该值为 TRUE，包括 OS X 和 cygwin
+WIN32：# 在所有的 win32 平台下该值为 TRUE，包括 cygwin
+```
 
 
-## ch13 CMake 变量之普通变量
+
+### 常见的变量定义
 
 ```cmake
 # 可以多个值，分隔符默认空格和分号
@@ -152,7 +393,7 @@ set(bar ${not_define})
 message("bar=${bar}")
 ```
 
-**多行打印**
+### **多行打印**
 
 ```cmake
 set(myVar "goes here")
@@ -320,7 +561,7 @@ list(SORT <list> [COMPARE <compare>] [CASE <case>] [ORDER <order>])
 # 第一种定义方式
 set(<variable> <value>... CACHE <type> <docstring> [FORCE])
 # 第二种定义方式
-option(is_top OFF "is top dir")
+option(<variable> "<help_text>" [value])
 ```
 
 支持的类型：
@@ -374,6 +615,12 @@ message("${out_var}")
 ```
 
 ## ch17 CMake 流程控制之判断条件和if()命令
+
+| 类型 | 值                                                           |
+| ---- | ------------------------------------------------------------ |
+| 一元 | EXISTS, COMMAND, DEFINED                                     |
+| 二元 | EQUAL, LESS, LESS_EQUAL, GREATER, GREATER_EQUAL,<br/>STREQUAL, STRLESS, STRLESS_EQUAL, STRGREATER,<br/>STRGREATER_EQUAL, VERSION_EQUAL, VERSION_LESS,<br/>VERSION_LESS_EQUAL, VERSION_GREATER, VERSION_GREATER_EQUAL, MATCHES |
+| 逻辑 | NOT, AND, OR                                                 |
 
 ```CMAKE
 set(var ON)
@@ -507,9 +754,13 @@ endwhile ()
 
 
 
-## ch19 CMake 流程控制之 foreach0 命令
+## ch19 CMake 流程控制之 foreach() 命令
 
 ```cmake
+foreach (item 2 4 5)
+    message("item=${item}")
+endforeach ()
+
 foreach (var RANGE 10)
     message("var=${var}")
 endforeach ()
@@ -595,15 +846,16 @@ message("macro_var=${macro_var}")
 
 **Linux**
 
-![image-20221007172813635](ImagesMarkDown/cmake-best-pratctice-course/image-20221007172813635.png)
+![image-20221007172813635](ImageMarkDown/cmake-best-pratctice-course/image-20221007172813635.png)
 
 **windows**
 
-![image-20221007172116149](ImagesMarkDown/cmake-best-pratctice-course/image-20221007172116149.png)
+![image-20221007172116149](ImageMarkDown/cmake-best-pratctice-course/image-20221007172116149.png)
 
-![image-20221007180428277](ImagesMarkDown/cmake-best-pratctice-course/image-20221007180428277.png)
+![image-20221007180428277](ImageMarkDown/cmake-best-pratctice-course/image-20221007180428277.png)
 
 ### 引入作用域的几种方式
+
 #### 目录
 
 **例子**
@@ -665,6 +917,7 @@ message("top func func_var=${func_var}")
 
 
 ### 其他影响变量作用域的场景
+
 #### 缓存变量
 
 ```cmake
@@ -695,21 +948,21 @@ message("src_var=${src_var}") # 为空
 
 ## ch23 初识 CMake 中 target 的概念
 
-![image-20221007231511189](ImagesMarkDown/cmake-best-pratctice-course/image-20221007231511189.png)
+![image-20221007231511189](ImageMarkDown/cmake-best-pratctice-course/image-20221007231511189.png)
 
-![image-20221007231615346](ImagesMarkDown/cmake-best-pratctice-course/image-20221007231615346.png)
+![image-20221007231615346](ImageMarkDown/cmake-best-pratctice-course/image-20221007231615346.png)
 
-![image-20221007231743234](ImagesMarkDown/cmake-best-pratctice-course/image-20221007231743234.png)
+![image-20221007231743234](ImageMarkDown/cmake-best-pratctice-course/image-20221007231743234.png)
 
-![image-20221007232024140](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232024140.png)
+![image-20221007232024140](ImageMarkDown/cmake-best-pratctice-course/image-20221007232024140.png)
 
-![image-20221007232132557](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232132557.png)
+![image-20221007232132557](ImageMarkDown/cmake-best-pratctice-course/image-20221007232132557.png)
 
-![image-20221007232243404](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232243404.png)
+![image-20221007232243404](ImageMarkDown/cmake-best-pratctice-course/image-20221007232243404.png)
 
-![image-20221007232336225](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232336225.png)
+![image-20221007232336225](ImageMarkDown/cmake-best-pratctice-course/image-20221007232336225.png)
 
-![image-20221007232438704](ImagesMarkDown/cmake-best-pratctice-course/image-20221007232438704.png)
+![image-20221007232438704](ImageMarkDown/cmake-best-pratctice-course/image-20221007232438704.png)
 
 ## ch24 初识 CMake 策略
 
@@ -830,6 +1083,23 @@ cmake -L ./build # 一般的缓存变量
 cmake -LAH ./build # 高级的缓存变量，更详细的缓存变量
 ```
 
+### Debug与Release构建
+
+为了方便debug，我们在开发过程中一般是编译Debug版本的库或者应用，可以利用gdb调试很轻松的就可以发现错误具体所在。在主cmake文件中我们只需要加如下设置即可：
+
+```cmake
+IF(NOT CMAKE_BUILD_TYPE)
+    SET(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose Release or Debug" FORCE)
+ENDIF()
+MESSAGE(STATUS "Build type: " ${CMAKE_BUILD_TYPE})
+```
+
+在执行cmake命令的时候可以设置`CMAKE_BUILD_TYPE`变量值切换`Debug`或者`Release`版本编译：
+
+```sh
+$ cmake .. -DCMAKE_BUILD_TYPE=Release
+```
+
 
 
 ## ch28 CMake 构建阶段命令行基本用法
@@ -860,9 +1130,9 @@ cmake --build ./build --clean-first --parallel 4
 cmake --install ./build --prefix ./out
 ```
 
-![image-20221009001601683](ImagesMarkDown/cmake-best-pratctice-course/image-20221009001601683.png)
+![image-20221009001601683](ImageMarkDown/cmake-best-pratctice-course/image-20221009001601683.png)
 
-![image-20221009001815375](ImagesMarkDown/cmake-best-pratctice-course/image-20221009001815375.png)
+![image-20221009001815375](ImageMarkDown/cmake-best-pratctice-course/image-20221009001815375.png)
 
 
 
@@ -878,8 +1148,11 @@ cmake --install ./build --prefix ./out --strip
 
 
 ## ch31 ccmake 使用详解
+
 ## ch32 cmake-gui使用详解
+
 ## ch33 如何在 Visual Studio 中创建和使用 CMake 项目
+
 ## ch34 如何在 vscode 中创建和使用 CMake 项目
 
 ```cmake
@@ -903,6 +1176,7 @@ target_sources(ch34-vscode-project PRIVATE main.cpp)
 
 
 ## ch35 如何在 Qt Creator 中创建和使用CMake 项目
+
 ## ch36 使用CMake 管理一个可执行目标项目
 
 ```http
@@ -936,8 +1210,11 @@ set_target_properties(hello
 
 
 ## ch38 CMake 如何控制共享库的符号可见性
+
 ## ch39 使用CMake 管理仅头文件的库
+
 ## ch40 如何在CMake 中使用我们自己的库
+
 ## ch41 CMake 管理编译器和连接器的行为
 
 target_compile_definitions
@@ -1080,9 +1357,29 @@ find_path (<VAR> name1 [path1 path2 ...])
 
 
 
-## ch46 CMake 查找可执行程序 -（补）库
+## ch46 CMake 查找可执行程序 -（补）库和检测环境
 
+添加一些和平台相关的特性，比如我们添加一些依赖于平台是否能提供log和exp功能的代码。当然，几乎所有的平台都支持这个特性。首先在顶层CMakeLists.txt中使用check_function_exists宏来检查是否提供这些功能:
 
+```cmake
+# Does this system provide the log and exp functions?
+include(CheckFunctionExists)
+check_function_exists(log HAVE_LOG)
+check_function_exists(exp HAVE_EXP)
+```
+
+然后，修改一下`TutorialConfig.h.in`配置文件，定义一下宏。当平台支持这些特性时，自动生成相应的宏定义:
+
+```cpp
+// If we have both log and exp then use them
+#if defined (HAVE_LOG) && defined (HAVE_EXP)
+    result = exp(log(x)*0.5)
+#else
+//otherwise use an intertive approach
+#endif
+```
+
+## 
 
 ## ch47 CMake 如何查找第三方库
 
@@ -1100,11 +1397,14 @@ cmake -DOPENSS_ROOT_DIR=/usr/local/opt/openssl@1.1 -S . -B ./build
 
 
 ## ch48 如何在自己的项目使用第三方库
+
 ## ch49 如何自己写一个CMake 的查找模块
+
 ## ch50 vcpkg 使用介绍
+
 ## ch51 CMake 如何集成第三方源码
 
-![image-20221021212619865](ImagesMarkDown/cmake-best-pratctice-course/image-20221021212619865.png)
+![image-20221021212619865](ImageMarkDown/cmake-best-pratctice-course/image-20221021212619865.png)
 
 签名
 
@@ -1124,13 +1424,104 @@ FetchContent_Declare(
 
 ## ch52 CMake 如何在编译阶段执行用户自定义任务
 
-![image-20221021230120554](ImagesMarkDown/cmake-best-pratctice-course/image-20221021230120554.png)
+**add_custom_command**: 增加客制化的构建规则到生成的构建系统中。对于add_custom_command，有两种使用形式。
+
+![image-20221021230120554](ImageMarkDown/cmake-best-pratctice-course/image-20221021230120554.png)
+
+**第一种形式**是为某个目标如库或可执行程序添加一个客制命令。这对于要在构建一个目标之前或之后执行一些操作非常有用。该命令本身会成为目标的一部分，仅在目标本身被构建时才会执行。如果该目标已经构建，命令将不会执行。
+
+- add_custom_command: 增加自定义的构建规则到生成的构建系统中
+
+```cmake
+add_custom_command(TARGET <target>
+                   PRE_BUILD | PRE_LINK | POST_BUILD
+                   COMMAND command1 [ARGS] [args1...]
+                   [COMMAND command2 [ARGS] [args2...] ...]
+                   [BYPRODUCTS [files...]]
+                   [WORKING_DIRECTORY dir]
+                   [COMMENT comment]
+                   [VERBATIM] [USES_TERMINAL]
+                   [COMMAND_EXPAND_LISTS])
+```
+
+命令执行的时机由如下参数决定：
+**1.  PRE_BUILD** -  在[Visual Studio Generators](https://cmake.org/cmake/help/latest/manual/cmake-generators.7.html#visual-studio-generators)，命令将在其他规则执行前执行。其他生成器，命令在`PRE_LINK`命令之前执行。
+**2. PRE_LINK** -  命令将会在编译之后，链接之前执行。
+**3. POST_BUILD** - 命令将会在目标构建完后执行。
+
+- 如果指定了WORKING_DIRECTORY，那么命令将会在指定的目录下执行。如果是相对路径，那么该路径将被解释为与当前源码目录对应的构建目录相对的路径。
+
+- 如果设置了COMMENT，那么在编译时，命令执行前会将COMMENT的内容当做信息输出。
+
+- 如果指定了APPEND ，那么COMMAND 和 DEPENDS 选项的值将会被追加到第一个指定的输出对应的客制命令中。目前，如果指定了APPEND选项，那么COMMENT, WORKING_DIRECTORY, 和 MAIN_DEPENDENCY选项将会忽略。但是将来可能会使用。
+- 如果指定了VERBATIM选项，那么，所有传递到命令的参数将会被适当地转义，这样命令接受到的参数将不会改变。建议使用VERBATIM选项，如果客制命令的输出不是创建一个存储在磁盘上的文件，需要使用命令**SET_SOURCE_FILES_PROPERTIES**把它标记为SYMBOLIC。
 
 
+
+**第二种形式**是增加一个客制命令用来产生一个输出。
+
+```cmake
+add_custom_command(OUTPUT output1 [output2 ...]
+                   COMMAND command1 [ARGS] [args1...]
+                   [COMMAND command2 [ARGS] [args2...] ...]
+                   [MAIN_DEPENDENCY depend]
+                   [DEPENDS [depends...]]
+                   [BYPRODUCTS [files...]]
+                   [IMPLICIT_DEPENDS <lang1> depend1
+                                    [<lang2> depend2] ...]
+                   [WORKING_DIRECTORY dir]
+                   [COMMENT comment]
+                   [DEPFILE depfile]
+                   [JOB_POOL job_pool]
+                   [VERBATIM] [APPEND] [USES_TERMINAL]
+                   [COMMAND_EXPAND_LISTS])
+```
+
+不要同时在多个相互独立的目标中执行上述命令产生相同的文件，主要是为了防止冲突产生。如果有多条命令，它们将会按顺序执行。ARGS是为了向后兼容，使用过程中可以忽略。MAIN_DEPENDENCY完全是可选的，它主要是针对Visual Studio给出的一个建议。在Makefile中，它会产生一个这样的新目标：
+
+```makefile
+OUTPUT: MAIN_DEPENDENCY DEPENDS
+          COMMAND
+```
+
+ 
+
+- add_custom_target: 增加一个没有输出的目标，使得它总是被构建
+
+```cmake
+add_custom_target(Name [ALL][command1 [args1...]]
+                    [COMMAND command2 [args2...] ...]
+                    [DEPENDS depend depend depend ... ]
+                    [WORKING_DIRECTORY dir]
+                    [COMMENT comment] [VERBATIM]
+                    [SOURCES src1 [src2...]])
+```
+
+增加一个指定名字的目标，并执行指定的命令。该目标没有输出文件，总是被认为是过期的，即使是在试图用目标的名字创建一个文件。如果指定了ALL选项，那就表明该目标会被添加到默认的构建目标，使得它每次都被运行。
+
+> 关于以上两个编译命令的具体用法，可以参考以下链接：[CMake客制化命令](https://link.jianshu.com/?t=http://blog.csdn.net/fuyajun01/article/details/8907207)
+
+例子（在CMake文件中任意位置添加）：
+
+
+
+```cmake
+ADD_CUSTOM_TARGET(
+    TestExample ALL
+)
+ADD_CUSTOM_COMMAND(TARGET TestExample
+        PRE_BUILD
+        COMMAND chmod 700 /home/chenjs/test
+        COMMAND /home/chenjs/test -c -o ../../output ../../input/test.txt
+        COMMENT "Generate project output file" 
+)
+```
+
+### 
 
 ## ch53 如何向已有的目标添加用户自定义任务
 
-![image-20221022183309612](ImagesMarkDown/cmake-best-pratctice-course/image-20221022183309612.png)
+![image-20221022183309612](ImageMarkDown/cmake-best-pratctice-course/image-20221022183309612.png)
 
 
 
@@ -1279,11 +1670,19 @@ cmake --preset=default
 
 
 ## ch60 使用sysroots 隔离构建环境
+
 ## ch61 超级构建
+
 ## ch62 使用超级构建构建 Qt6
+
 ## ch63 如何使用CMake 管理交叉编译
+
 ## ch64 CMake集成单元测试框架
+
 ## ch65 CMake 集成代码扫描工具
+
 ## ch66 CMake 项目优化
+
 ## ch67 CMake 代码复用
+
 ## ch68 如何迁移非 CMake 项目到 CMake
