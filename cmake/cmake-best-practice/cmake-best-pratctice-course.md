@@ -769,6 +769,12 @@ foreach (var RANGE 0 100 10)
     message("var=${var}")
 endforeach ()
 
+set(mylist a b c d)
+foreach (var IN LISTS mylist)
+    message("var=${var}")
+endforeach ()
+
+
 set(A 0;1)
 set(B 2 3)
 set(C "4 5")
