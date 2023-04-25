@@ -417,6 +417,8 @@ unset(multline)
 
 ## ch14 CMake 命令之 lists()
 
+https://blog.csdn.net/fengbingchun/article/details/127715230
+
 #### 读取列表
 
 ```cmake
@@ -503,18 +505,67 @@ message("${mylist}")
 
 # 转换
 #list(TRANSFORM <list> <ACTION> [<SELECTOR>] [OUTPUT_VARIABLE <output variable>])
+#list(TRANSFORM <list> <APPEND|PREPEND> <value> ...) # 将指定的value追加或前置到list的每个元素
+#list(TRANSFORM <list> <TOLOWER|TOUPPER> ...) # 将list的每个元素转换为大写或小写字符
+#list(TRANSFORM <list> STRIP ...) # 移除list中的前后空格
+#list(TRANSFORM <list> GENEX_STRIP ...) # 从list的每个元素中删除any generator expressions
+#list(TRANSFORM <list> REPLACE <regular_expression> <replace_expression> ...) # 匹配正则表达式,替换list中每个元素的匹配项
+
+#list(TRANSFORM <list> <ACTION> [<SELECTOR>] [OUTPUT_VARIABLE <output variable>])
 set(MY_LIST 1 2 3 4 5 6 7 8 9)
 list(TRANSFORM MY_LIST PREPEND  he-)
 list(TRANSFORM MY_LIST APPEND  0)
 message("${MY_LIST}")
 
+list(TRANSFORM my_list APPEND "x" FOR 2 5 1 OUTPUT_VARIABLE A_out)
+message("${A_out}")
+message("${my_list}")
+
+set(values a b c d e)
+list(TRANSFORM values APPEND 1)
+message("values: ${values}") # values: a1;b1;c1;d1;e1
+list(TRANSFORM values PREPEND 2)
+message("values: ${values}") # values: 2a1;2b1;2c1;2d1;2e1
+ 
+set(values a b c d e)
+list(TRANSFORM values APPEND 1 OUTPUT_VARIABLE var)
+message("values: ${values}; var: ${var}") # values: a;b;c;d;e; var: a1;b1;c1;d1;e1
+
+set(values a b c d e)
+list(TRANSFORM values APPEND 1 AT 0 3)
+message("values: ${values}") # values: a1;b;c;d1;e
+ 
+set(values a b c d e 1 2 3 4 5)
+list(TRANSFORM values APPEND "#" FOR 2 8 2)
+message("values: ${values}") # values: a;b;c#;d;e#;1;2#;3;4#;5
+ 
+set(values a b c d e 1 2 3 4 5)
+list(TRANSFORM values APPEND "#" REGEX [a-c])
+message("values: ${values}") # values: a#;b#;c#;d;e;1;2;3;4;5
+ 
 set(my_list a Bb c dD e Ff)
 list(TRANSFORM my_list TOLOWER )
 message("${my_list}")
 
-list(TRANSFORM my_list APPEND "x" FOR 2 5 1 OUTPUT_VARIABLE A_out)
-message("${A_out}")
-message("${my_list}")
+set(values a b c d e)
+list(TRANSFORM values TOUPPER)
+message("values: ${values}") # values: A;B;C;D;E
+list(TRANSFORM values TOLOWER)
+message("values: ${values}") # values: a;b;c;d;e
+ 
+set(values a b c d e)
+list(APPEND values " f j " " p  q ")
+message("values: ${values}") # values: a;b;c;d;e; f j ; p  q 
+list(TRANSFORM values STRIP)
+message("values: ${values}") # values: a;b;c;d;e;f j;p  q
+ 
+set(value one;$<1:two;three>;four;$<TARGET_OBJECTS:some_target>)
+list(TRANSFORM value GENEX_STRIP)
+message("value: ${value}") # value: one;$<1:two;three>;four;
+ 
+set(values a 1 b 2 c 3 d 4 e 5)
+list(TRANSFORM values REPLACE "[a-z]" "T")
+message("values: ${values}") # values: T;1;T;2;T;3;T;4;T;5
 ```
 
 
