@@ -10,4 +10,5 @@ add_executable(main)
 target_sources(main PRIVATE src/main.cpp)
 
 target_compile_definitions(main PRIVATE GIT_VERSION="${CMAKE_PROJECT_VERSION}")
+target_compile_definitions(main PRIVATE GIT_VERSION123="${PROJECT_VERSION}")
 

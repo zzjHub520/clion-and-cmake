@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 3.23)
-project(cmake-code-example)
+project(cmake-code-example
+        VERSION 1.22.333
+        DESCRIPTION "cmake study project"
+        HOMEPAGE_URL "eglinux.com"
+        LANGUAGES CXX C)
 list(APPEND CMAKE_MESSAGE_CONTEXT TOP)
 #add_subdirectory(ch05-CMake-demo)
 #add_subdirectory(ch09-demo)
@@ -22,7 +26,7 @@ list(APPEND CMAKE_MESSAGE_CONTEXT TOP)
 #add_subdirectory(ch37_manage_library_target)
 #add_subdirectory(ch38_library_visibility)
 #add_subdirectory(ch40_use_library)
-#add_subdirectory(ch41_manage_compiler_linker)
+add_subdirectory(ch41_manage_compiler_linker)
 #add_subdirectory(ch42_install)
 #add_subdirectory(ch43_install_export)
 #add_subdirectory(ch44_cpack)
@@ -35,4 +39,4 @@ list(APPEND CMAKE_MESSAGE_CONTEXT TOP)
 #add_subdirectory(ch54_add_custom_command_generate_file)
 #add_subdirectory(ch55_execute_process)
 #add_subdirectory(ch56_configure_file)
-add_subdirectory(ch59_cmake_presets)
+#add_subdirectory(ch59_cmake_presets)
