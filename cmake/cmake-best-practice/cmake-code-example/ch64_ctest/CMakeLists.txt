@@ -1,0 +1,6 @@
+add_subdirectory(01-no-framework)
+#add_subdirectory(02-structured)
+#add_subdirectory(03-catch2)
+#add_subdirectory(04-gtest)
+#add_subdirectory(05-gmock)
+#add_subdirectory(06-coverage)

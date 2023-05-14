@@ -2374,15 +2374,19 @@ CMake 默认定义了一些支持的宏，可以在预设中通过宏方便的�
   - displayName
   - description
 
-## ch60 使用sysroots 隔离构建环境
+## ch60 使用sysroots 隔离构建环境（简介）
 
 ## ch61 超级构建
 
-## ch62 使用超级构建构建 Qt6
+## ch62 使用超级构建构建 Qt6（不能正常播放）
 
 ## ch63 如何使用CMake 管理交叉编译
 
 ## ch64 CMake集成单元测试框架
+
+
+
+
 
 ## ch65 CMake 集成代码扫描工具
 
