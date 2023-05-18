@@ -2384,6 +2384,34 @@ CMake 默认定义了一些支持的宏，可以在预设中通过宏方便的�
 
 ## ch64 CMake集成单元测试框架
 
+```cmake
+Run Tests
+ ctest [<options>]
+
+Build and Test Mode
+ ctest --build-and-test <path-to-source> <path-to-build>
+       --build-generator <generator> [<options>...]
+      [--build-options <opts>...]
+      [--test-command <command> [<args>...]]
+
+Dashboard Client
+ ctest -D <dashboard>         [-- <dashboard-options>...]
+ ctest -M <model> -T <action> [-- <dashboard-options>...]
+ ctest -S <script>            [-- <dashboard-options>...]
+ ctest -SP <script>           [-- <dashboard-options>...]
+
+View Help
+ ctest --help[-<topic>]
+```
+
+
+
+```cmake
+#运行参数
+--test-dir <dir> #可以在源码命令指定编译目录
+Specify the directory in which to look for tests.
+```
+
 
 
 
